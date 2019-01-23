@@ -21,7 +21,7 @@ STATIC_PATH = os.path.join(PROJECT_PATH, 'static')
 CONF_PATH = [sys.prefix, ''][sys.prefix == '/usr'] + '/etc/motioneye'
 
 # path to the directory where pid files go (must be writable by motionEye)
-for d in ['/run', '/var/run', '/tmp', '/var/tmp']:
+for d in [PROJECT_PATH + '/../venv/run', '/run', '/var/run', '/tmp', '/var/tmp']:
     if os.path.exists(d):
         RUN_PATH = d
         break
@@ -30,7 +30,7 @@ else:
     RUN_PATH = PROJECT_PATH
 
 # path to the directory where log files go (must be writable by motionEye)
-for d in ['/log', '/var/log', '/tmp', '/var/tmp']:
+for d in [PROJECT_PATH + '/../venv/log', '/log', '/var/log', '/tmp', '/var/tmp']:
     if os.path.exists(d):
         LOG_PATH = d
         break
@@ -39,7 +39,13 @@ else:
     LOG_PATH = RUN_PATH
 
 # default output path for media files (must be writable by motionEye)
-MEDIA_PATH = '/var/lib/motioneye'
+for d in [PROJECT_PATH + '/../venv/media', '/var/lib/motioneye']:
+    if os.path.exists(d):
+        MEDIA_PATH = d
+        break
+
+else:
+    MEDIA_PATH = RUN_PATH
 
 # the log level (use FATAL, ERROR, WARNING, INFO or DEBUG)
 LOG_LEVEL = logging.INFO
